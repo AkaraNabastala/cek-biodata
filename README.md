@@ -1,16 +1,35 @@
-# React + Vite
+# Cek Biodata DAPODIK 🎓
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Aplikasi web modern berbasis **React** dan **Vite** yang dirancang khusus untuk memudahkan pengecekan, sinkronisasi, dan pemutakhiran biodata siswa berdasarkan standar isian **DAPODIK**. Dilengkapi dengan berbagai fitur formulir dinamis, validasi alamat otomatis (Cascading API), serta antarmuka yang bersih dan interaktif.
 
-Currently, two official plugins are available:
+## Fitur Utama ✨
+- **Validasi Kredensial Pintar**: Memeriksa kesesuaian NISN dan NIPD dengan basis data secara *real-time*.
+- **Formulir Alamat Berjenjang**: Penarikan data Provinsi, Kabupaten/Kota, Kecamatan, dan Kelurahan/Desa secara otomatis menggunakan API Wilayah Indonesia.
+- **Automasi Status Orang Tua**: Logika presisi yang menyembunyikan dan mengisi nilai *default* (seperti "Tidak Berpenghasilan", "Tidak Sekolah") secara otomatis jika status orang tua diatur sebagai "Sudah Wafat".
+- **Pusat Informasi PIP & Bansos**: Layar pop-up (*modal*) informatif yang langsung merujuk pada tata cara cek bantuan sosial dan dana PIP dengan video panduan.
+- **UI/UX Bersih**: Antarmuka berbasis *Tailwind CSS* yang terbagi menjadi tab-tab sistematis (Biodata, Alamat & Domisili, Orang Tua, dan Ringkasan) agar mudah digunakan.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Teknologi yang Digunakan 🛠️
+- **Sisi Klien (Frontend)**: React 19, Vite, Tailwind CSS
+- **Peta Digital**: Leaflet & React-Leaflet
+- **Pengujian Otomatis (Testing)**: Vitest, JSDom, & React Testing Library
+- **Basis Data**: Google Spreadsheet & Google Apps Script
+- **Deployment**: Terotomatisasi penuh via GitHub Actions menuju GitHub Pages.
 
-## React Compiler
+---
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 🤝 Mari Terhubung!
 
-## Expanding the ESLint configuration
+Halo! Terima kasih telah berkunjung ke repositori ini. Jika Anda merasa kode ini bermanfaat, memiliki ide pengembangan, tawaran kerja sama, atau hanya sekadar ingin menyapa, Anda bisa menemukan saya di sini:
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- 💼 **LinkedIn**: [Mahardicha](https://www.linkedin.com/in/mahardicha/)
+- 📷 **Instagram**: [@dicha16_](https://instagram.com/dicha16_)
+- 🎵 **TikTok**: [@dicha16_](https://tiktok.com/@dicha16_)
+- ▶️ **YouTube**: [mahardicha16](https://www.youtube.com/@mahardicha16)
+
+### ☕ Dukung Proyek Ini (Support Me)
+Saya akan sangat mengapresiasi dukungan moral maupun materiil dari Anda! Jika berkenan untuk mentraktir saya secangkir kopi agar saya terus semangat berkarya, silakan salurkan melalui:
+- 💳 **SociaBuzz**: [dicha16_](https://sociabuzz.com/dicha16_)
+- 💰 **Saweria**: [mahardicha](https://saweria.co/mahardicha)
+
+Terima kasih banyak atas kunjungannya, semangat terus! 🚀

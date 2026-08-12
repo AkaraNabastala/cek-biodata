@@ -23,4 +23,10 @@ dist-ssr
 *.sln
 *.sw?
 
-src/data.js
+# Sensitive data and scripts
+.env
+.env.*
+*.env
+script.gs
+*.csv
+*.xlsx
