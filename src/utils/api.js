@@ -1,4 +1,4 @@
-const GAS_URL = import.meta.env.VITE_GAS_URL;
+const GAS_URL = "https://script.google.com/macros/s/AKfycbxJ54zWbzSBUuVH8j3F4cqv1BakR252vRAnPtfbrV-clx9tXgUUnZCLDN4OrkHBk-s/exec";
 
 export const loginStudent = async (nipd, nisn) => {
   if (!GAS_URL) {
