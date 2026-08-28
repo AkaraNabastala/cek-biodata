@@ -251,6 +251,7 @@ const DataForm = ({ user, activeTab, onSave, isSaving }) => {
     e.preventDefault();
     
     // Gabungkan data custom kartu jika ada isinya
+    const submitData = { ...formData };
     const validCards = customKartu.filter(k => k.jenis && k.nomor);
     if (validCards.length > 0) {
       submitData['_custom_kartu'] = validCards;
