@@ -210,7 +210,13 @@ const DataForm = ({ user, activeTab, onSave, isSaving }) => {
         }
       });
       setFormData(initialData);
-      setCustomKartu([{ jenis: '', nomor: '', nama: '' }]);
+      
+      if (user?.custom_kartu_list && user.custom_kartu_list.length > 0) {
+        setCustomKartu(user.custom_kartu_list);
+      } else {
+        setCustomKartu([{ jenis: '', nomor: '', nama: '' }]);
+      }
+      
       setHasWali(!!user?.['Nama wali'] || !!user?.['NIK wali']);
     }
   }, [activeTab, isEditing, user, activeSchema]);

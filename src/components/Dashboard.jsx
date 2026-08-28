@@ -75,7 +75,7 @@ const Dashboard = ({ user, onLogout, setUser }) => {
       return;
     }
 
-    const activityMessage = `Melakukan perubahan pada bagian [${sectionName}] (Kategori: ${changedKeys.join(', ')})`;
+    const activityMessage = `Melakukan pembaruan data pada menu [${sectionName}]`;
     const newData = { ...user, ...updatedFields };
 
     try {
