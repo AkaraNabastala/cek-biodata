@@ -194,7 +194,7 @@ const MultiSelectDropdown = ({ field, value, isEditing, setFormData }) => {
 const DataForm = ({ user, activeTab, onSave, isSaving }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({});
-  const [customKartu, setCustomKartu] = useState({ jenis: '', nomor: '', nama: '' });
+  const [customKartu, setCustomKartu] = useState([{ jenis: '', nomor: '', nama: '' }]);
   const [hasWali, setHasWali] = useState(false);
 
   const activeSchema = schema[activeTab] || [];
@@ -210,7 +210,7 @@ const DataForm = ({ user, activeTab, onSave, isSaving }) => {
         }
       });
       setFormData(initialData);
-      setCustomKartu({ jenis: '', nomor: '', nama: '' });
+      setCustomKartu([{ jenis: '', nomor: '', nama: '' }]);
       setHasWali(!!user?.['Nama wali'] || !!user?.['NIK wali']);
     }
   }, [activeTab, isEditing, user, activeSchema]);
@@ -251,9 +251,9 @@ const DataForm = ({ user, activeTab, onSave, isSaving }) => {
     e.preventDefault();
     
     // Gabungkan data custom kartu jika ada isinya
-    const submitData = { ...formData };
-    if (customKartu.jenis && customKartu.nomor) {
-      submitData['_custom_kartu'] = customKartu;
+    const validCards = customKartu.filter(k => k.jenis && k.nomor);
+    if (validCards.length > 0) {
+      submitData['_custom_kartu'] = validCards;
     }
     
     onSave(submitData, activeTab);
@@ -313,40 +313,81 @@ const DataForm = ({ user, activeTab, onSave, isSaving }) => {
     if (field.type === 'custom_kartu') {
       return (
         <div key="custom_kartu" className="col-span-1 md:col-span-2 bg-yellow-50 p-4 rounded-lg border border-yellow-200 mt-2">
-          <p className="text-sm text-yellow-800 mb-3 italic">
-            * Jika Anda memiliki kartu kesejahteraan lain (seperti KIS, dll), silakan tambahkan di sini. Data ini akan dikirimkan sebagai usulan penambahan.
-          </p>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div>
-              <label className="text-sm font-medium text-gray-700 mb-1 block">Jenis Kartu (Cth: KIS)</label>
-              <input 
-                type="text" 
-                disabled={!isEditing}
-                value={customKartu.jenis}
-                onChange={e => setCustomKartu({...customKartu, jenis: e.target.value})}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-yellow-500 focus:border-yellow-500 bg-white disabled:bg-gray-100" 
-              />
-            </div>
-            <div>
-              <label className="text-sm font-medium text-gray-700 mb-1 block">Nomor Kartu</label>
-              <input 
-                type="text" 
-                disabled={!isEditing}
-                value={customKartu.nomor}
-                onChange={e => setCustomKartu({...customKartu, nomor: e.target.value})}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-yellow-500 focus:border-yellow-500 bg-white disabled:bg-gray-100" 
-              />
-            </div>
-            <div>
-              <label className="text-sm font-medium text-gray-700 mb-1 block">Nama di Kartu</label>
-              <input 
-                type="text" 
-                disabled={!isEditing}
-                value={customKartu.nama}
-                onChange={e => setCustomKartu({...customKartu, nama: e.target.value})}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-yellow-500 focus:border-yellow-500 bg-white disabled:bg-gray-100" 
-              />
-            </div>
+          <div className="flex justify-between items-center mb-3">
+            <p className="text-sm text-yellow-800 italic m-0">
+              * Jika Anda memiliki kartu kesejahteraan lain (seperti KIS, dll), silakan tambahkan di sini.
+            </p>
+            {isEditing && (
+              <button 
+                type="button" 
+                onClick={() => setCustomKartu([...customKartu, {jenis: '', nomor: '', nama: ''}])} 
+                className="text-xs bg-yellow-200 text-yellow-800 px-3 py-1.5 rounded font-bold hover:bg-yellow-300 flex items-center gap-1"
+              >
+                <FaPlus size={10} /> Tambah Kartu
+              </button>
+            )}
+          </div>
+          <div className="space-y-4">
+            {customKartu.map((kartu, index) => (
+              <div key={index} className="grid grid-cols-1 md:grid-cols-[1fr_1fr_1fr_auto] gap-4 items-end bg-white/50 p-3 rounded border border-yellow-100">
+                <div>
+                  <label className="text-sm font-medium text-gray-700 mb-1 block">Jenis Kartu {index + 1}</label>
+                  <input 
+                    type="text" 
+                    disabled={!isEditing}
+                    value={kartu.jenis}
+                    onChange={e => {
+                      const newKartu = [...customKartu];
+                      newKartu[index].jenis = e.target.value;
+                      setCustomKartu(newKartu);
+                    }}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-yellow-500 focus:border-yellow-500 bg-white disabled:bg-gray-100" 
+                  />
+                </div>
+                <div>
+                  <label className="text-sm font-medium text-gray-700 mb-1 block">Nomor Kartu</label>
+                  <input 
+                    type="text" 
+                    disabled={!isEditing}
+                    value={kartu.nomor}
+                    onChange={e => {
+                      const newKartu = [...customKartu];
+                      newKartu[index].nomor = e.target.value;
+                      setCustomKartu(newKartu);
+                    }}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-yellow-500 focus:border-yellow-500 bg-white disabled:bg-gray-100" 
+                  />
+                </div>
+                <div>
+                  <label className="text-sm font-medium text-gray-700 mb-1 block">Nama di Kartu</label>
+                  <input 
+                    type="text" 
+                    disabled={!isEditing}
+                    value={kartu.nama}
+                    onChange={e => {
+                      const newKartu = [...customKartu];
+                      newKartu[index].nama = e.target.value;
+                      setCustomKartu(newKartu);
+                    }}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-yellow-500 focus:border-yellow-500 bg-white disabled:bg-gray-100" 
+                  />
+                </div>
+                {isEditing && customKartu.length > 1 && (
+                  <button 
+                    type="button" 
+                    onClick={() => {
+                      const newKartu = [...customKartu];
+                      newKartu.splice(index, 1);
+                      setCustomKartu(newKartu);
+                    }} 
+                    className="mb-1 text-red-500 hover:text-red-700 bg-red-50 hover:bg-red-100 p-2 rounded flex justify-center items-center"
+                    title="Hapus Kartu"
+                  >
+                    <FaTimes />
+                  </button>
+                )}
+              </div>
+            ))}
           </div>
         </div>
       );

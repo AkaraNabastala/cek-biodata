@@ -15,7 +15,7 @@ export const loginStudent = async (nipd, nisn) => {
   }
 };
 
-export const updateStudentData = async (nipd, nisn, updatedData, changeLog) => {
+export const updateStudentData = async (nipd, nisn, updatedData, changeLog, activityMessage) => {
   if (!GAS_URL) {
     throw new Error("URL API (Google Apps Script) belum diatur di .env");
   }
@@ -32,7 +32,8 @@ export const updateStudentData = async (nipd, nisn, updatedData, changeLog) => {
         nipd: nipd,
         nisn: nisn,
         data: updatedData,
-        changeLog: changeLog // String ringkasan perubahan untuk Sheet 2
+        changeLog: changeLog, // Array ringkasan perubahan untuk Sheet 2
+        activityMessage: activityMessage // Pesan deskripsi log aktivitas
       })
     });
     const data = await response.json();

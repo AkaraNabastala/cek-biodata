@@ -39,6 +39,12 @@ const MapPicker = ({ initialLat, initialLng, transportMode, onLocationChange }) 
   const [position, setPosition] = useState(
     initialLat && initialLng ? { lat: parseFloat(initialLat), lng: parseFloat(initialLng) } : null
   );
+
+  useEffect(() => {
+    if (initialLat && initialLng) {
+      setPosition({ lat: parseFloat(initialLat), lng: parseFloat(initialLng) });
+    }
+  }, [initialLat, initialLng]);
   
   const [distance, setDistance] = useState(0);
   const [estimatedTime, setEstimatedTime] = useState(0);

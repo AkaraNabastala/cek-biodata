@@ -39,14 +39,33 @@ const Dashboard = ({ user, onLogout, setUser }) => {
     setSaveMessage({ text: '', type: '' });
     
     const changes = [];
+    const changedKeys = [];
+
+    // Khusus untuk Kesejahteraan yang mengirimkan array _custom_kartu
+    if (updatedFields._custom_kartu) {
+      changes.push({
+        kategori: 'Penambahan Kartu Kesejahteraan',
+        before: '-',
+        after: `Menambahkan ${updatedFields._custom_kartu.length} kartu baru`
+      });
+      changedKeys.push('Kartu Kesejahteraan');
+    }
+
     Object.keys(updatedFields).forEach(key => {
+      if (key === '_custom_kartu') return;
+      
       let currentValue = user[key];
       if (key === 'Tanggal Lahir') {
         currentValue = formatDate(currentValue);
       }
       
       if (updatedFields[key] !== currentValue) {
-        changes.push(`${key}: ${currentValue || '-'} -> ${updatedFields[key]}`);
+        changes.push({
+          kategori: key,
+          before: currentValue || '-',
+          after: updatedFields[key] || '-'
+        });
+        changedKeys.push(key);
       }
     });
 
@@ -56,11 +75,11 @@ const Dashboard = ({ user, onLogout, setUser }) => {
       return;
     }
 
-    const changeLogString = `[${sectionName}] ${changes.join(', ')}`;
+    const activityMessage = `Melakukan perubahan pada bagian [${sectionName}] (Kategori: ${changedKeys.join(', ')})`;
     const newData = { ...user, ...updatedFields };
 
     try {
-      await updateStudentData(user.NIPD, user.NISN, newData, changeLogString);
+      await updateStudentData(user.NIPD, user.NISN, newData, changes, activityMessage);
       setUser(newData);
       setSaveMessage({ text: 'Data berhasil disimpan dan log dicatat!', type: 'success' });
     } catch (error) {
