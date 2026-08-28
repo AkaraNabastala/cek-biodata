@@ -37,12 +37,17 @@ const LocationMarker = ({ position, setPosition }) => {
 const MapPicker = ({ initialLat, initialLng, transportMode, onLocationChange }) => {
   const [mapKey] = useState(() => Math.random().toString(36).substring(7));
   const [position, setPosition] = useState(
-    initialLat && initialLng ? { lat: parseFloat(initialLat), lng: parseFloat(initialLng) } : null
+    initialLat && initialLng 
+      ? { lat: parseFloat(String(initialLat).replace(',', '.')), lng: parseFloat(String(initialLng).replace(',', '.')) } 
+      : null
   );
 
   useEffect(() => {
     if (initialLat && initialLng) {
-      setPosition({ lat: parseFloat(initialLat), lng: parseFloat(initialLng) });
+      setPosition({ 
+        lat: parseFloat(String(initialLat).replace(',', '.')), 
+        lng: parseFloat(String(initialLng).replace(',', '.')) 
+      });
     }
   }, [initialLat, initialLng]);
   
